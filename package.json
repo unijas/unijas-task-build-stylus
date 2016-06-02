@@ -1,0 +1,34 @@
+{
+  "name": "unijas-task-build-stylus",
+  "version": "0.1.0",
+  "description": "Exported gulp-tasks for building unijas stylus-files",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unijas/unijas-task-buildjs.git"
+  },
+  "keywords": [
+    "isojas",
+    "gulp"
+  ],
+  "author": "Siggi Duenkel <chaosprinz76@gmail.com> (https://siggiduenkel.wordpress.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/unijas/unijas-task-buildjs/issues"
+  },
+  "homepage": "https://github.com/unijas/unijas-task-buildjs#readme",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-stylus": "^2.4.0",
+    "jeet": "^6.1.2",
+    "nib": "^1.1.0",
+    "require-gulp-tasks": "^1.0.0",
+    "rupture": "^0.6.1",
+    "yargs": "^4.7.1"
+  }
+}
