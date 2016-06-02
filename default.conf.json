@@ -1,0 +1,19 @@
+{
+  "stylus": {
+    "main": [
+      ["src", "stylesheets", "**/*.styl"]
+    ],
+    "includes": [
+      ["src", "components", "*", "styles", "*.styl"]
+    ],
+    "dest": [
+      ["dist", "public", "css"]
+    ],
+    "includeComponents": true,
+    "conf": {
+      "compress": true,
+      "use": ["nib", "rupture", "jeet"],
+      "import": ["nib", "jeet"]
+    }
+  }
+}
