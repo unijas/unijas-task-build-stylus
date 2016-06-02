@@ -59,7 +59,10 @@ let setStylusLibs = function (cfg) {
  * @return {[Object]}     object with proper stylus-config
  */
 let setupStylusConf = function (cfg, devMode) {
-  devMode = devMode || true
+  if (typeof devMode === 'undefined') {
+    devMode = true
+  }
+  console.log(devMode)
   let conf = setStylusLibs(cfg)
   conf.conf.compress = devMode ? false : true
   let components = buildPathes(conf.includes)
@@ -82,8 +85,9 @@ let setupStylusConf = function (cfg, devMode) {
  * @return {gulp-pipeline}  returns the .pipe(gulp.dest())-call of the pipeline
  */
 let build = function (cfg, devMode) {
-  devMode = devMode || true
-
+  if (typeof devMode === 'undefined') {
+    devMode = true
+  }
   let conf = setupStylusConf(cfg)
   let runner = gulp.src(conf.src)
   runner = devMode ? runner.pipe(Sourcemaps.init()) : runner
@@ -95,7 +99,8 @@ let build = function (cfg, devMode) {
 
 let cfg = readConfigFile(Join(process.cwd(), 'config', 'build.conf.json'))
 gulp.task('stylus', function () {
-  build(cfg)
+  let devMode = process.env.NODE_ENV === 'production' ? false : true
+  build(cfg, devMode)
 })
 
 module.exports = gulp.tasks
