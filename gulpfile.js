@@ -4,8 +4,16 @@ const gulp = require('gulp')
 const Stylus = require('gulp-stylus')
 const Sourcemaps = require('gulp-sourcemaps')
 const Join = require('path').join
-const Cfg = require(Join(process.cwd(), 'config', 'build.conf.json')).stylus
 
+let readConfigFile = function (file) {
+  let module
+  try {
+    module = require(file)
+  } catch (e) {
+    module = require(Join(__dirname, 'default.conf.json'))
+  }
+  return module.stylus
+}
 
 let buildPathes = function (pathes) {
   pathes = pathes.map(path => {
@@ -16,6 +24,7 @@ let buildPathes = function (pathes) {
 
 let setLibs = function (cfg) {
   let conf = cfg
+  console.log(conf)
   conf.conf.use = cfg.conf.use.map(lib => {
     return require(lib)()
   })
@@ -52,8 +61,10 @@ let build = function (cfg, dev) {
   return runner.pipe(gulp.dest(conf.dest))
 }
 
+let cfg = readConfigFile(Join(process.cwd(), 'config', 'build.conf.json'))
+
 gulp.task('stylus', function () {
-  build(Cfg)
+  build(cfg)
 })
 
 module.exports = gulp.tasks
