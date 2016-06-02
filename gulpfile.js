@@ -4,6 +4,7 @@ const gulp = require('gulp')
 const Stylus = require('gulp-stylus')
 const Sourcemaps = require('gulp-sourcemaps')
 const Join = require('path').join
+const Minify = require('gulp-clean-css')
 
 /**
  * ## readConfigFile
@@ -92,6 +93,7 @@ let build = function (cfg, devMode) {
   let runner = gulp.src(conf.src)
   runner = devMode ? runner.pipe(Sourcemaps.init()) : runner
   runner = runner.pipe(Stylus(conf.stylusConf))
+  runner = devMode ? runner : runner.pipe(Minify())
   runner = devMode ? runner.pipe(Sourcemaps.write('.')) : runner
 
   return runner.pipe(gulp.dest(conf.dest))
