@@ -5,34 +5,7 @@ const Stylus = require('gulp-stylus')
 const Sourcemaps = require('gulp-sourcemaps')
 const Join = require('path').join
 const Minify = require('gulp-clean-css')
-
-/**
- * ## readConfigFile
- * require given file or the default-config-file and read in the stylus-conf
- * @param  {[string]} file path to the config-file to use
- * @return {[Object]}      stylus config-object
- */
-let readConfigFile = function (file) {
-  let module
-  try {
-    module = require(file)
-  } catch (e) {
-    module = require(Join(__dirname, 'default.conf.json'))
-  }
-  return module.stylus
-}
-
-/**
- * ## buildPathes
- * @param  {[Array]} pathes Elements are file-glob-arrays
- * @return {[Array]}        paths/file-globs as strings with prefixed cwd
- */
-let buildPathes = function (pathes) {
-  pathes = pathes.map(path => {
-    return Join(process.cwd(), ...path)
-  })
-  return pathes
-}
+const Helper = require('unijas-task-helper')
 
 /**
  * ## setStylusLibs
@@ -66,14 +39,14 @@ let setupStylusConf = function (cfg, devMode) {
   console.log(devMode)
   let conf = setStylusLibs(cfg)
   conf.conf.compress = devMode ? false : true
-  let components = buildPathes(conf.includes)
+  let components = Helper.buildPathes(conf.includes)
   let modules = conf.conf.import
 
   conf.conf.import = [...modules, ...components]
   return {
     stylusConf: conf.conf,
-    src: buildPathes(conf.main),
-    dest: buildPathes(conf.dest)[0]
+    src: Helper.buildPathes(conf.main),
+    dest: Helper.buildPathes(conf.dest)[0]
   }
 }
 
@@ -99,7 +72,9 @@ let build = function (cfg, devMode) {
   return runner.pipe(gulp.dest(conf.dest))
 }
 
-let cfg = readConfigFile(Join(process.cwd(), 'config', 'build.conf.json'))
+let configFile = Join(process.cwd(), 'config', 'build.conf.json')
+let cfg = Helper.readConfigFile(__dirname, configFile).stylus
+
 gulp.task('stylus', function () {
   let devMode = process.env.NODE_ENV === 'production' ? false : true
   build(cfg, devMode)
