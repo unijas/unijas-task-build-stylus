@@ -9,7 +9,6 @@
     "dest": [
       ["dist", "public", "css"]
     ],
-    "includeComponents": true,
     "conf": {
       "compress": true,
       "use": ["nib", "rupture", "jeet"],
