@@ -4,7 +4,8 @@
       ["src", "stylesheets", "**/*.styl"]
     ],
     "includes": [
-      ["src", "components", "*", "styles", "*.styl"]
+      ["src", "app", "components", "**", "styles", "*.styl"],
+      ["src", "stylesheets", "lib", "**", "*.styl"]
     ],
     "dest": [
       ["dist", "public", "css"]
